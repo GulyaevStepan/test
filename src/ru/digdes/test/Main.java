@@ -9,7 +9,7 @@ public class Main {
         String userText = scanner.nextLine();
 
         if (validity(userText)) {
-            System.out.println(reed(userText));
+            System.out.println(read(userText));
         }
     }
 
@@ -58,7 +58,7 @@ public class Main {
      * Входную строку можно представить в виде: "abc3[abc]abc" == "abc" + "3[abc]" + "abc"
      * Метод распаковывает строку по частям.
      * */
-    static String reed(String text) {
+    static String read(String text) {
         StringBuilder builder = new StringBuilder(text);
         String result = null;
 
