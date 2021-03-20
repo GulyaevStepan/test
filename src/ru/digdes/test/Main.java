@@ -17,11 +17,6 @@ public class Main {
      * Метод проверяет каждый символ по очереди.
      * Если попадается недопустимый - вернет false.
      * Если весь цикл прошёл успешно - true.
-     *
-     * Важно! Строки с пустыми скобками будут валидны.
-     * Пример: "abc3[]abc"
-     * (Скорее всего пустые скобки не нужны, но я оставил,
-     * потому что в задании про них не сказано, а разархиватору они не мешают)
      * */
     static boolean validity(String text){
         StringBuilder builder = new StringBuilder(text);
@@ -98,5 +93,43 @@ public class Main {
             result = result + builder.substring(lastIndex+1, builder.length());
         }
         return result;
+    }
+
+    /*
+     * Этот метод тоже проверяет на валидность строку,
+     * но в нём есть ограничения, не указанные в задании.
+     * Нужужны они или нет - решать Вам.
+     * 1. Недопустимы пустые скобки, пример: "abc3[]abc"
+     * 2. недопустимы числа вида 0012 и число 0
+     * */
+    static boolean newValidity(String text){
+        StringBuilder builder = new StringBuilder(text);
+        int count = 0;
+
+        for (int i = 0; i < builder.length(); i++) {
+            int key = (int) builder.charAt(i);
+            if ((65 <= key && key <= 90) || (97 <= key && key <= 122)) {
+                continue;
+            }
+            else if (49 <= key && key <= 57) {
+                while (48 <= key && key <= 57 && ++i < builder.length()) {
+                    key = (int) builder.charAt(i);
+                }
+                if (key == 91) {
+                    ++count;
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+            else if (key == 93 && count > 0 && (int) builder.charAt(i - 1) != 91) {
+                --count;
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+        return count == 0;
     }
 }
